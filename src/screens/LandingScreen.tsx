@@ -103,7 +103,7 @@ export default function LandingScreen({ effectif, setEffectif, onSelectDiag1, on
             </div>
             <h2 className="text-lg font-bold text-zinc-900 mb-2">Diagnostic Prévention Santé</h2>
             <p className="text-sm text-zinc-500 leading-relaxed mb-4">
-              Analyse détaillée basée sur le référentiel Moha : DUERP, gouvernance RPS, dispositifs de signalement et inclusion.
+              Analyse approfondie de vos pratiques RPS : DUERP, gouvernance, dispositifs de signalement, inclusion et innovation RH.
             </p>
             <div className="flex flex-wrap gap-1.5 mb-5">
               {["Conformité & DUERP", "Gouvernance", "Prévention RPS", "Équité", "Climat social", "Innovation RH"].map((p) => (
