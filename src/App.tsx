@@ -83,6 +83,7 @@ export default function App() {
           onAnswer={handleAnswer}
           onNext={handleNext}
           onBack={handleBack}
+          onHome={handleReset}
           current={currentQ + 1}
           total={questions.length}
           isLast={currentQ === questions.length - 1}

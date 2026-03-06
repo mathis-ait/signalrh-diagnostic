@@ -1,26 +1,26 @@
 import { useState } from "react";
-import { Check, Minus, Plus } from "lucide-react";
+import { Check, Shield, Bell, BarChart3, ChevronUp, ChevronDown, ArrowRight, Calendar } from "lucide-react";
 
 type ModuleId = "PREVENTION" | "SIGNALEMENT" | "REMONTEE";
 type TierId = "MICRO" | "MACRO" | "GIGA" | "TERA";
 
-const MODULES: { id: ModuleId; name: string; icon: string; color: string; desc: string }[] = [
-  { id: "PREVENTION", name: "RPS Santé Mentale", icon: "🛡️", color: "#2073BB", desc: "Baromètre bien-être, DUERP, IA RPS" },
-  { id: "SIGNALEMENT", name: "Signalement", icon: "🔔", color: "#D97706", desc: "Canal anonyme, Loi Waserman" },
-  { id: "REMONTEE", name: "Remontée d'informations", icon: "📊", color: "#059669", desc: "Irritants terrain, workflow suivi" },
+const MODULES: { id: ModuleId; name: string; Icon: React.ComponentType<{ className?: string }>; color: string; desc: string }[] = [
+  { id: "PREVENTION",  name: "RPS Santé Mentale",      Icon: Shield,    color: "#2073BB", desc: "Baromètre, DUERP, IA préventive" },
+  { id: "SIGNALEMENT", name: "Signalement",             Icon: Bell,      color: "#D97706", desc: "Canal anonyme, Loi Waserman" },
+  { id: "REMONTEE",    name: "Remontée d'informations", Icon: BarChart3, color: "#059669", desc: "Irritants terrain, suivi clôture" },
 ];
 
 const PRICES: Record<ModuleId, Record<TierId, number>> = {
   PREVENTION: { MICRO: 169, MACRO: 769, GIGA: 1769, TERA: 3769 },
-  SIGNALEMENT: { MICRO: 159, MACRO: 559, GIGA: 1559, TERA: 2759 },
+  SIGNALEMENT:{ MICRO: 159, MACRO: 559, GIGA: 1559, TERA: 2759 },
   REMONTEE:   { MICRO: 149, MACRO: 449, GIGA: 1249, TERA: 2149 },
 };
 
-const TIERS: { id: TierId; label: string; min: number; max: number }[] = [
-  { id: "MICRO", label: "1 – 10", min: 1, max: 10 },
-  { id: "MACRO", label: "11 – 49", min: 11, max: 49 },
-  { id: "GIGA",  label: "50 – 249", min: 50, max: 249 },
-  { id: "TERA",  label: "250+", min: 250, max: 1000 },
+const TIERS: { id: TierId; label: string; min: number }[] = [
+  { id: "MICRO", label: "1 – 10",   min: 1   },
+  { id: "MACRO", label: "11 – 49",  min: 11  },
+  { id: "GIGA",  label: "50 – 249", min: 50  },
+  { id: "TERA",  label: "250+",     min: 250 },
 ];
 
 function getTier(n: number): TierId {
@@ -30,9 +30,9 @@ function getTier(n: number): TierId {
   return "TERA";
 }
 
-function getDiscount(count: number) {
-  if (count === 2) return 0.25;
-  if (count >= 3) return 0.4;
+function getDiscount(n: number) {
+  if (n === 2) return 0.25;
+  if (n >= 3) return 0.4;
   return 0;
 }
 
@@ -42,11 +42,9 @@ export default function PricingScreen({ preSelectedModules = ["PREVENTION"] }: P
   const initial = new Set<ModuleId>(preSelectedModules.filter(m => ["PREVENTION","SIGNALEMENT","REMONTEE"].includes(m)) as ModuleId[]);
   const [selected, setSelected] = useState<Set<ModuleId>>(initial);
   const [employees, setEmployees] = useState(30);
-  const [billing, setBilling] = useState<"annual" | "monthly">("annual");
 
   const tier = getTier(employees);
   const discount = getDiscount(selected.size);
-  const annualFactor = billing === "monthly" ? (1 / 10) : 1; // mensuel = annuel / 10 (2 mois offerts)
 
   function toggle(id: ModuleId) {
     setSelected(prev => {
@@ -62,122 +60,115 @@ export default function PricingScreen({ preSelectedModules = ["PREVENTION"] }: P
     return { id, base, after };
   });
   const total = lines.reduce((s, l) => s + l.after, 0);
-  const displayPrice = billing === "monthly" ? Math.round(total / 10) : total;
 
   return (
     <div className="bg-white border-t border-zinc-100 px-4 py-14">
       <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-10">
-          <h2 className="text-3xl font-bold text-zinc-900 mb-2">Composez votre solution</h2>
-          <p className="text-zinc-500 text-sm">Sélectionnez les modules et ajustez l'effectif — le prix se calcule en temps réel.</p>
+        <div className="mb-8">
+          <h2 className="text-xl font-bold text-zinc-900 mb-1">Composez votre solution</h2>
+          <p className="text-sm text-zinc-500">Prix ajustés en temps réel selon votre effectif et votre sélection.</p>
         </div>
 
-        <div className="grid md:grid-cols-[1fr_300px] gap-6 items-start">
-          {/* Left: modules + effectif */}
-          <div className="space-y-5">
+        <div className="grid md:grid-cols-[1fr_280px] gap-6 items-start">
+          {/* Gauche */}
+          <div className="space-y-4">
             {/* Modules */}
-            <div className="bg-white rounded-2xl border border-zinc-200 p-5">
-              <p className="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-3">Modules</p>
-              <div className="space-y-2">
-                {MODULES.map(m => {
-                  const isOn = selected.has(m.id);
-                  return (
-                    <button key={m.id} onClick={() => toggle(m.id)}
-                      className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl border-2 text-left transition-all ${isOn ? "border-[#2073BB] bg-[#EFF6FF]" : "border-zinc-200 hover:border-zinc-300"}`}>
-                      <span className={`w-5 h-5 rounded-md border-2 flex-shrink-0 flex items-center justify-center transition-all ${isOn ? "border-[#2073BB] bg-[#2073BB]" : "border-zinc-300"}`}>
-                        {isOn && <Check className="w-3 h-3 text-white" strokeWidth={3} />}
-                      </span>
-                      <span className="text-lg flex-shrink-0">{m.icon}</span>
-                      <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-sm text-zinc-900">{m.name}</p>
-                        <p className="text-xs text-zinc-500">{m.desc}</p>
-                      </div>
-                      <span className="text-sm font-bold text-zinc-700 flex-shrink-0">{PRICES[m.id][tier]}€/an</span>
-                    </button>
-                  );
-                })}
-              </div>
-              {selected.size >= 2 && (
-                <div className="mt-3 text-center text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-xl py-2">
-                  Bundle {selected.size} modules — réduction −{Math.round(discount * 100)}% appliquée ✅
-                </div>
-              )}
+            <div className="border border-zinc-200 rounded-xl overflow-hidden">
+              {MODULES.map((m, i) => {
+                const isOn = selected.has(m.id);
+                return (
+                  <button key={m.id} onClick={() => toggle(m.id)}
+                    className={`w-full flex items-center gap-3 px-4 py-3.5 text-left transition-colors border-b last:border-b-0 border-zinc-100 ${isOn ? "bg-[#EFF6FF]" : "bg-white hover:bg-zinc-50"}`}>
+                    <span className={`w-4 h-4 rounded border-2 flex-shrink-0 flex items-center justify-center transition-all ${isOn ? "border-[#2073BB] bg-[#2073BB]" : "border-zinc-300"}`}>
+                      {isOn && <Check className="w-2.5 h-2.5 text-white" strokeWidth={3} />}
+                    </span>
+                    <div className="w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0" style={{ backgroundColor: m.color + "15" }}>
+                      <m.Icon className="w-4 h-4" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-semibold text-sm text-zinc-900">{m.name}</p>
+                      <p className="text-xs text-zinc-500">{m.desc}</p>
+                    </div>
+                    <span className="text-sm font-bold text-zinc-600 flex-shrink-0">{PRICES[m.id][tier]}€/an</span>
+                  </button>
+                );
+              })}
             </div>
 
+            {selected.size >= 2 && (
+              <div className="text-xs font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg px-4 py-2.5 flex items-center gap-2">
+                <Check className="w-3.5 h-3.5" />
+                Bundle {selected.size} modules — réduction −{Math.round(discount * 100)}% appliquée
+              </div>
+            )}
+
             {/* Effectif */}
-            <div className="bg-white rounded-2xl border border-zinc-200 p-5">
+            <div className="border border-zinc-200 rounded-xl p-4">
               <div className="flex items-center justify-between mb-3">
-                <p className="text-xs font-bold uppercase tracking-widest text-zinc-400">Effectif</p>
-                <div className="flex items-center gap-2">
+                <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Effectif</p>
+                <div className="flex items-center gap-1.5">
                   <button onClick={() => setEmployees(Math.max(1, employees - 1))}
-                    className="w-7 h-7 rounded-lg border border-zinc-200 flex items-center justify-center hover:bg-zinc-50 transition-colors">
-                    <Minus className="w-3 h-3 text-zinc-600" />
+                    className="w-6 h-6 rounded border border-zinc-200 flex items-center justify-center hover:bg-zinc-50 transition-colors">
+                    <ChevronDown className="w-3.5 h-3.5 text-zinc-500" />
                   </button>
-                  <span className="font-bold text-zinc-900 text-sm w-12 text-center">{employees}</span>
+                  <span className="font-bold text-zinc-900 text-sm w-10 text-center">{employees}</span>
                   <button onClick={() => setEmployees(Math.min(1000, employees + 1))}
-                    className="w-7 h-7 rounded-lg border border-zinc-200 flex items-center justify-center hover:bg-zinc-50 transition-colors">
-                    <Plus className="w-3 h-3 text-zinc-600" />
+                    className="w-6 h-6 rounded border border-zinc-200 flex items-center justify-center hover:bg-zinc-50 transition-colors">
+                    <ChevronUp className="w-3.5 h-3.5 text-zinc-500" />
                   </button>
                 </div>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-1.5">
                 {TIERS.map(t => (
                   <button key={t.id} onClick={() => setEmployees(t.min)}
-                    className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all ${tier === t.id ? "bg-[#2073BB] text-white" : "bg-zinc-100 text-zinc-500 hover:bg-zinc-200"}`}>
+                    className={`flex-1 py-1.5 rounded text-xs font-semibold transition-all ${tier === t.id ? "bg-[#2073BB] text-white" : "bg-zinc-100 text-zinc-500 hover:bg-zinc-200"}`}>
                     {t.label}
                   </button>
                 ))}
               </div>
             </div>
-
-            {/* Billing */}
-            <div className="flex rounded-xl border border-zinc-200 overflow-hidden">
-              {(["annual", "monthly"] as const).map(b => (
-                <button key={b} onClick={() => setBilling(b)}
-                  className={`flex-1 py-2.5 text-sm font-semibold transition-all ${billing === b ? "bg-[#2073BB] text-white" : "bg-white text-zinc-600 hover:bg-zinc-50"}`}>
-                  {b === "annual" ? "Annuel (−16%)" : "Mensuel"}
-                </button>
-              ))}
-            </div>
           </div>
 
-          {/* Right: summary */}
-          <div className="bg-[#003B76] rounded-2xl p-6 text-white sticky top-6">
-            <p className="text-xs font-bold uppercase tracking-widest text-blue-300 mb-4">Récapitulatif</p>
-            <div className="space-y-3 mb-5">
+          {/* Droite — récap */}
+          <div className="bg-[#003B76] rounded-xl p-5 text-white sticky top-20">
+            <p className="text-xs font-semibold uppercase tracking-wider text-blue-300 mb-4">Récapitulatif</p>
+
+            <div className="space-y-2.5 mb-4">
               {lines.map(({ id, base, after }) => {
-                const mod = MODULES.find(m => m.id === id)!;
+                const m = MODULES.find(m => m.id === id)!;
                 return (
-                  <div key={id} className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-sm">
-                      <span>{mod.icon}</span>
-                      <span className="text-blue-100">{mod.name}</span>
+                  <div key={id} className="flex items-center justify-between text-sm">
+                    <div className="flex items-center gap-2">
+                      <m.Icon className="w-3.5 h-3.5 text-blue-300" />
+                      <span className="text-blue-100">{m.name}</span>
                     </div>
-                    <div className="text-right">
+                    <div>
                       {discount > 0 && <span className="text-xs text-blue-400 line-through mr-1">{base}€</span>}
-                      <span className="text-sm font-bold">{after}€</span>
+                      <span className="font-bold">{after}€</span>
                     </div>
                   </div>
                 );
               })}
-              {lines.length === 0 && <p className="text-sm text-blue-300 italic">Sélectionnez un module</p>}
+              {lines.length === 0 && <p className="text-sm text-blue-400 italic">Sélectionnez un module</p>}
             </div>
-            <div className="border-t border-white/20 pt-4 mb-5">
+
+            <div className="border-t border-white/15 pt-4 mb-4">
               <div className="flex items-baseline justify-between">
-                <span className="text-sm text-blue-200">{billing === "annual" ? "Total / an HT" : "Total / mois HT"}</span>
-                <span className="text-3xl font-black">{displayPrice}€</span>
+                <span className="text-xs text-blue-300">Total / an HT</span>
+                <span className="text-2xl font-black">{total}€</span>
               </div>
-              {discount > 0 && <p className="text-xs text-emerald-400 mt-1">Bundle −{Math.round(discount * 100)}% inclus</p>}
+              {discount > 0 && <p className="text-xs text-emerald-400 mt-0.5">−{Math.round(discount * 100)}% bundle inclus</p>}
             </div>
+
             <a href={`https://signalrh.fr/tarifs?modules=${Array.from(selected).join(",")}`}
               target="_blank" rel="noopener noreferrer"
-              className="block w-full text-center py-3 rounded-xl bg-white text-[#003B76] font-bold text-sm hover:bg-blue-50 transition-colors mb-2">
-              Voir les tarifs complets →
+              className="block w-full text-center py-2.5 rounded-lg bg-white text-[#003B76] font-bold text-sm hover:bg-blue-50 transition-colors mb-2">
+              Tarifs complets <ArrowRight className="inline w-3.5 h-3.5 ml-1" />
             </a>
             <a href="https://cal.com/signalrh/pre-audit-premier-contact"
               target="_blank" rel="noopener noreferrer"
-              className="block w-full text-center py-3 rounded-xl border border-white/25 text-white font-semibold text-sm hover:bg-white/10 transition-colors">
-              📅 Démo 30 min — gratuite
+              className="block w-full text-center py-2.5 rounded-lg border border-white/20 text-white text-sm font-medium hover:bg-white/10 transition-colors">
+              <Calendar className="inline w-3.5 h-3.5 mr-1.5" />Démo gratuite
             </a>
           </div>
         </div>
