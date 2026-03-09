@@ -1175,7 +1175,7 @@ export const QUESTIONS_PREVENTION: DiagQuestion[] = [
     "pilier": "Conformité & DUERP",
     "pilierIcon": "Scale",
     "pilierColor": "#2073BB",
-    "text": "Votre Document Unique d’Évaluation des Risques Professionnels (DUERP) est-il à jour et utilisé pour piloter la prévention ?",
+    "text": "Votre Document Unique d'Évaluation des Risques Professionnels (DUERP) est-il à jour et utilisé pour piloter la prévention ?",
     "type": "choice",
     "scoreMax": 4.0,
     "options": [
@@ -1185,7 +1185,7 @@ export const QUESTIONS_PREVENTION: DiagQuestion[] = [
         "score": 0.0
       },
       {
-        "label": "Existant avec une mise à jour il y a plus d’un an",
+        "label": "Existant avec une mise à jour il y a plus d'un an",
         "value": "1.0",
         "score": 1.0
       },
@@ -1293,7 +1293,7 @@ export const QUESTIONS_PREVENTION: DiagQuestion[] = [
         "score": 0.0
       },
       {
-        "label": "Existant avec une mise à jour il y a plus qu’un an",
+        "label": "Existant avec une mise à jour il y a plus qu'un an",
         "value": "1.0",
         "score": 1.0
       },
@@ -1325,42 +1325,42 @@ export const QUESTIONS_PREVENTION: DiagQuestion[] = [
     "options": [
       {
         "label": "Psychologue",
-        "value": "1.0",
+        "value": "psychologue",
         "score": 1.0
       },
       {
         "label": "Médecine du travail",
-        "value": "1.0",
+        "value": "medecine-du-travail",
         "score": 1.0
       },
       {
         "label": "Assistante sociale",
-        "value": "0.5",
+        "value": "assistante-sociale",
         "score": 0.5
       },
       {
         "label": "Médiateur professionnel / gestion des conflits",
-        "value": "0.5",
+        "value": "mediateur-professionnel",
         "score": 0.5
       },
       {
         "label": "Coach professionnel certifié",
-        "value": "0.25",
+        "value": "coach-professionnel",
         "score": 0.25
       },
       {
         "label": "Sophrologue / Relaxation / Méditation",
-        "value": "0.25",
+        "value": "sophrologue",
         "score": 0.25
       },
       {
-        "label": "Animateur d’ateliers non professionnels",
-        "value": "0.25",
+        "label": "Animateur d'ateliers non professionnels",
+        "value": "animateur-ateliers",
         "score": 0.25
       },
       {
         "label": "Coaching sportif",
-        "value": "0.25",
+        "value": "coaching-sportif",
         "score": 0.25
       }
     ]
@@ -1448,42 +1448,42 @@ export const QUESTIONS_PREVENTION: DiagQuestion[] = [
     "options": [
       {
         "label": "Direction générale",
-        "value": "1.0",
+        "value": "direction-generale",
         "score": 1.0
       },
       {
         "label": "Pôle RH",
-        "value": "1.0",
+        "value": "pole-rh",
         "score": 1.0
       },
       {
         "label": "Managers / Encadrement de proximité",
-        "value": "1.0",
+        "value": "managers-encadrement",
         "score": 1.0
       },
       {
         "label": "CSE / Représentant du personnel",
-        "value": "1.0",
+        "value": "cse-representant",
         "score": 1.0
       },
       {
         "label": "QHSE / HSE",
-        "value": "0.5",
+        "value": "qhse-hse",
         "score": 0.5
       },
       {
         "label": "CSSCT",
-        "value": "0.5",
+        "value": "cssct",
         "score": 0.5
       },
       {
         "label": "Responsable RSE",
-        "value": "0.5",
+        "value": "responsable-rse",
         "score": 0.5
       },
       {
         "label": "Référents spécialisé (handicap, harcèlement, sexisme...)",
-        "value": "0.5",
+        "value": "referents-specialises",
         "score": 0.5
       }
     ]
@@ -1508,7 +1508,7 @@ export const QUESTIONS_PREVENTION: DiagQuestion[] = [
         "score": 1.0
       },
       {
-        "label": "Présentés à l’arrivée ou communiqués ponctuellement",
+        "label": "Présentés à l'arrivée ou communiqués ponctuellement",
         "value": "2.0",
         "score": 2.0
       },
@@ -1565,7 +1565,7 @@ export const QUESTIONS_PREVENTION: DiagQuestion[] = [
     "pilier": "Prévention RPS",
     "pilierIcon": "Shield",
     "pilierColor": "#7C3AED",
-    "text": "Vos collaborateurs disposent-ils d’un moyen formalisé et confidentiel pour signaler une situation à risque ?",
+    "text": "Vos collaborateurs disposent-ils d'un moyen formalisé et confidentiel pour signaler une situation à risque ?",
     "type": "choice",
     "scoreMax": 4.0,
     "options": [
@@ -1575,7 +1575,7 @@ export const QUESTIONS_PREVENTION: DiagQuestion[] = [
         "score": 0.0
       },
       {
-        "label": "Possibilité d’en parler à un RH ou un manager",
+        "label": "Possibilité d'en parler à un RH ou un manager",
         "value": "1.0",
         "score": 1.0
       },
@@ -1704,7 +1704,7 @@ export const QUESTIONS_PREVENTION: DiagQuestion[] = [
     "pilier": "Prévention RPS",
     "pilierIcon": "Shield",
     "pilierColor": "#7C3AED",
-    "text": "Votre organisation dispose-t-elle de procédures pour gérer efficacement les situations d’urgence (physiques, de violence ou traumatiques) ?",
+    "text": "Votre organisation dispose-t-elle de procédures pour gérer efficacement les situations d'urgence (physiques, de violence ou traumatiques) ?",
     "type": "choice",
     "scoreMax": 4.0,
     "options": [
@@ -1724,7 +1724,7 @@ export const QUESTIONS_PREVENTION: DiagQuestion[] = [
         "score": 2.0
       },
       {
-        "label": "Une procédure d’urgence est connue, mais rarement testée",
+        "label": "Une procédure d'urgence est connue, mais rarement testée",
         "value": "3.0",
         "score": 3.0
       },
@@ -1822,7 +1822,7 @@ export const QUESTIONS_PREVENTION: DiagQuestion[] = [
         "score": 0.0
       },
       {
-        "label": "Possibilité d’en parler à un manager ou RH",
+        "label": "Possibilité d'en parler à un manager ou RH",
         "value": "1.0",
         "score": 1.0
       },
@@ -1832,7 +1832,7 @@ export const QUESTIONS_PREVENTION: DiagQuestion[] = [
         "score": 2.0
       },
       {
-        "label": "Dispositifs communiqués et réunions d’expression",
+        "label": "Dispositifs communiqués et réunions d'expression",
         "value": "3.0",
         "score": 3.0
       },
@@ -1925,7 +1925,7 @@ export const QUESTIONS_PREVENTION: DiagQuestion[] = [
     "scoreMax": 4.0,
     "options": [
       {
-        "label": "Aucun outil n’est mis en place, ou l’entreprise ne mesure pas leur usage",
+        "label": "Aucun outil n'est mis en place, ou l'entreprise ne mesure pas leur usage",
         "value": "0.0",
         "score": 0.0
       },
@@ -2048,7 +2048,7 @@ export const QUESTIONS_PREVENTION: DiagQuestion[] = [
         "score": 2.0
       },
       {
-        "label": "Séquence dédiée dans l’onboarding",
+        "label": "Séquence dédiée dans l'onboarding",
         "value": "3.0",
         "score": 3.0
       },
@@ -2064,7 +2064,7 @@ export const QUESTIONS_PREVENTION: DiagQuestion[] = [
     "pilier": "Conformité & DUERP",
     "pilierIcon": "Scale",
     "pilierColor": "#2073BB",
-    "text": "Disposez-vous d’un système structuré pour suivre dans le temps vos indicateurs et actions QVCT ?",
+    "text": "Disposez-vous d'un système structuré pour suivre dans le temps vos indicateurs et actions QVCT ?",
     "type": "choice",
     "scoreMax": 4.0,
     "options": [
@@ -2192,7 +2192,7 @@ export const QUESTIONS_PREVENTION: DiagQuestion[] = [
         "score": 2.0
       },
       {
-        "label": "Diffusés régulièrement à l’ensemble des équipes",
+        "label": "Diffusés régulièrement à l'ensemble des équipes",
         "value": "3.0",
         "score": 3.0
       },
@@ -2244,7 +2244,7 @@ export const QUESTIONS_PREVENTION: DiagQuestion[] = [
     "pilier": "Conformité & DUERP",
     "pilierIcon": "Scale",
     "pilierColor": "#2073BB",
-    "text": "Disposez-vous d’une politique de prévention des violences et harcèlements (moral et sexuel), avec des moyens et des actions visibles ?",
+    "text": "Disposez-vous d'une politique de prévention des violences et harcèlements (moral et sexuel), avec des moyens et des actions visibles ?",
     "type": "choice",
     "scoreMax": 4.0,
     "options": [
@@ -2269,7 +2269,7 @@ export const QUESTIONS_PREVENTION: DiagQuestion[] = [
         "score": 3.0
       },
       {
-        "label": "Politique globale (formation, communication, référents, plan d’action suivi)",
+        "label": "Politique globale (formation, communication, référents, plan d'action suivi)",
         "value": "4.0",
         "score": 4.0
       }
@@ -2280,7 +2280,7 @@ export const QUESTIONS_PREVENTION: DiagQuestion[] = [
     "pilier": "Équité",
     "pilierIcon": "Users",
     "pilierColor": "#059669",
-    "text": "Votre entreprise agit-elle concrètement pour l’égalité professionnelle entre les femmes et les hommes ?",
+    "text": "Votre entreprise agit-elle concrètement pour l'égalité professionnelle entre les femmes et les hommes ?",
     "type": "choice",
     "scoreMax": 4.0,
     "options": [
@@ -2336,7 +2336,7 @@ export const QUESTIONS_PREVENTION: DiagQuestion[] = [
         "score": 2.0
       },
       {
-        "label": "Politique d’inclusion LGBTQ+ active (communication, événements, référents…)",
+        "label": "Politique d'inclusion LGBTQ+ active (communication, événements, référents…)",
         "value": "3.0",
         "score": 3.0
       },
@@ -2408,7 +2408,7 @@ export const QUESTIONS_PREVENTION: DiagQuestion[] = [
         "score": 2.0
       },
       {
-        "label": "Dispositifs d’accompagnement en place (congés, écoute, référents)",
+        "label": "Dispositifs d'accompagnement en place (congés, écoute, référents)",
         "value": "3.0",
         "score": 3.0
       },
@@ -2552,7 +2552,7 @@ export const QUESTIONS_PREVENTION: DiagQuestion[] = [
         "score": 2.0
       },
       {
-        "label": "Accès structuré à un dispositif d’aide (plateforme, ligne d’écoute, référents)",
+        "label": "Accès structuré à un dispositif d'aide (plateforme, ligne d'écoute, référents)",
         "value": "3.0",
         "score": 3.0
       },
@@ -2574,62 +2574,62 @@ export const QUESTIONS_PREVENTION: DiagQuestion[] = [
     "options": [
       {
         "label": "Semaine de 4 jours et autres semaines réduites",
-        "value": "0.0",
+        "value": "semaine-4-jours",
         "score": 0.0
       },
       {
         "label": "Travail hybride (télétravail et présentiel)",
-        "value": "0.0",
+        "value": "travail-hybride",
         "score": 0.0
       },
       {
         "label": "Recrutement sans CV et assessment innovant",
-        "value": "0.0",
+        "value": "recrutement-sans-cv",
         "score": 0.0
       },
       {
         "label": "Employee Assistance Program (EAP)",
-        "value": "0.0",
+        "value": "eap",
         "score": 0.0
       },
       {
-        "label": "Volontariat d’entreprise",
-        "value": "0.0",
+        "label": "Volontariat d'entreprise",
+        "value": "volontariat-entreprise",
         "score": 0.0
       },
       {
         "label": "Aménagement des lieux de travail (repos, silence, sport, bureaux debout)",
-        "value": "0.0",
+        "value": "amenagement-lieux",
         "score": 0.0
       },
       {
         "label": "Labels et certifications (Great Place to Work, Top Employer)",
-        "value": "0.0",
+        "value": "labels-certifications",
         "score": 0.0
       },
       {
-        "label": "Team Building et cohésion d’équipe",
-        "value": "0.0",
+        "label": "Team Building et cohésion d'équipe",
+        "value": "team-building",
         "score": 0.0
       },
       {
         "label": "Gamification des processus",
-        "value": "0.0",
+        "value": "gamification",
         "score": 0.0
       },
       {
         "label": "Événements thématiques (Movember, Octobre Rose, Dry January)",
-        "value": "0.0",
+        "value": "evenements-thematiques",
         "score": 0.0
       },
       {
         "label": "Semaine de la QVCT",
-        "value": "0.0",
+        "value": "semaine-qvct",
         "score": 0.0
       },
       {
         "label": "Challenges ponctuels (mobilité douce, zéro déchet, courses solidaires)",
-        "value": "0.0",
+        "value": "challenges-ponctuels",
         "score": 0.0
       }
     ]
@@ -2640,7 +2640,7 @@ export const DIAG_CONFIG = {
   diag1: {
     id: 'diag360',
     name: 'Diagnostic 360° QVCT',
-    description: 'Évaluation complète de votre maturité prévention en 37 questions — 5 piliers clés',
+    description: 'Évaluation complète de votre maturité prévention en 37 questions - 5 piliers clés',
     duration: '5 min',
     questions: QUESTIONS_360,
     piliers: ["Conformité légale & Maîtrise des risques", "Prévention & dispositifs d'accompagnements", "Structure prévention santé", "Équité & inclusion", "Climat & expérience collaborateur"],
@@ -2648,7 +2648,7 @@ export const DIAG_CONFIG = {
   diag2: {
     id: 'diagPrevention',
     name: 'Diagnostic Prévention Santé',
-    description: 'Évaluation approfondie basée sur le référentiel Moha QVCT — 39 questions',
+    description: 'Évaluation approfondie basée sur le référentiel Moha QVCT - 39 questions',
     duration: '8 min',
     questions: QUESTIONS_PREVENTION,
     piliers: ["D3", "D4", "D6", "D7", "CONFORM", "SPS"],
