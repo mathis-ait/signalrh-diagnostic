@@ -8,8 +8,8 @@ interface Props {
 }
 
 const EFFECTIFS = [
-  { label: "1 – 9", value: "1-9" },
-  { label: "10 – 49", value: "10-49" },
+  { label: "1 – 10", value: "1-10" },
+  { label: "11 – 49", value: "11-49" },
   { label: "50 – 249", value: "50-249" },
   { label: "250+", value: "250+" },
 ];

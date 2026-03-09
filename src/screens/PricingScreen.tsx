@@ -36,12 +36,19 @@ function getDiscount(n: number) {
   return 0;
 }
 
-interface Props { preSelectedModules?: string[] }
+function effectifToEmployees(effectif: string): number {
+  if (effectif === '1-10') return 5;
+  if (effectif === '11-49') return 30;
+  if (effectif === '50-249') return 100;
+  return 300;
+}
 
-export default function PricingScreen({ preSelectedModules = ["PREVENTION"] }: Props) {
+interface Props { preSelectedModules?: string[]; effectif?: string }
+
+export default function PricingScreen({ preSelectedModules = ["PREVENTION"], effectif = '11-49' }: Props) {
   const initial = new Set<ModuleId>(preSelectedModules.filter(m => ["PREVENTION","SIGNALEMENT","REMONTEE"].includes(m)) as ModuleId[]);
   const [selected, setSelected] = useState<Set<ModuleId>>(initial);
-  const [employees, setEmployees] = useState(30);
+  const [employees, setEmployees] = useState(() => effectifToEmployees(effectif));
 
   const tier = getTier(employees);
   const discount = getDiscount(selected.size);

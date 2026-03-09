@@ -1,5 +1,14 @@
 import type { DiagQuestion } from '../data/moha-questions'
 
+type TierId = 'MICRO' | 'MACRO' | 'GIGA' | 'TERA'
+
+function effectifToTier(effectif: string): TierId {
+  if (effectif === '1-10') return 'MICRO'
+  if (effectif === '11-49') return 'MACRO'
+  if (effectif === '50-249') return 'GIGA'
+  return 'TERA'
+}
+
 export interface PilierScore {
   label: string
   icon: string
@@ -34,7 +43,7 @@ const MODULE_DEFS = {
     name: 'RPS Santé Mentale',
     icon: '🛡️',
     color: '#2073BB',
-    prices: { '1-9': 169, '10-49': 769, '50-249': 1769, '250+': 3769 },
+    prices: { MICRO: 169, MACRO: 769, GIGA: 1769, TERA: 3769 } as Record<TierId, number>,
     features: ['Auto-évaluations RPS (Gollac)', 'Monitoring bien-être temps réel', 'Rapports DUERP automatisés', 'Préconisations IA', 'Catalogue experts'],
     pilierTriggers: ['Conformité légale & Maîtrise des risques', 'Structure prévention santé', 'Conformité & DUERP', 'Structure & gouvernance'],
     why: 'Votre score en conformité et gouvernance révèle des lacunes dans le pilotage de la prévention RPS.',
@@ -43,7 +52,7 @@ const MODULE_DEFS = {
     name: 'Signalement',
     icon: '🔔',
     color: '#D97706',
-    prices: { '1-9': 159, '10-49': 559, '50-249': 1559, '250+': 2759 },
+    prices: { MICRO: 159, MACRO: 559, GIGA: 1559, TERA: 2759 } as Record<TierId, number>,
     features: ['Canal anonyme chiffré', 'Conformité Loi Waserman', 'Traçabilité & export PDF', 'Référents paramétrables', 'Délais légaux trackés'],
     pilierTriggers: ["Prévention & dispositifs d'accompagnements", 'Prévention & dispositifs'],
     why: 'Vos dispositifs de signalement et d\'accompagnement sont insuffisants au regard de la Loi Waserman.',
@@ -52,7 +61,7 @@ const MODULE_DEFS = {
     name: "Remontée d'informations",
     icon: '📊',
     color: '#059669',
-    prices: { '1-9': 149, '10-49': 449, '50-249': 1249, '250+': 2149 },
+    prices: { MICRO: 149, MACRO: 449, GIGA: 1249, TERA: 2149 } as Record<TierId, number>,
     features: ['Remontées anonymes ou nominatives', 'Routage intelligent', 'Workflow jusqu\'à clôture', 'Notifications auto', 'Types personnalisables'],
     pilierTriggers: ['Climat & expérience collaborateur', 'Équité & inclusion', 'Climat & expérience'],
     why: 'Le climat social et les canaux d\'expression des collaborateurs nécessitent une structuration urgente.',
@@ -81,8 +90,10 @@ function getScore(q: DiagQuestion, answer: string | string[] | undefined): numbe
 
 export function computeScoresFromMoha(
   answers: Record<string, string | string[]>,
-  questions: DiagQuestion[]
+  questions: DiagQuestion[],
+  effectif = '11-49'
 ): MohaScoreResult {
+  const tier = effectifToTier(effectif)
   // Grouper par pilier
   const pilierMap: Record<string, { label: string; icon: string; color: string; score: number; max: number }> = {}
 
@@ -116,10 +127,9 @@ export function computeScoresFromMoha(
   const recommendedIds = Array.from(recommended)
   const discount = recommendedIds.length === 2 ? 0.25 : recommendedIds.length >= 3 ? 0.4 : 0
 
-  const effectif = '10-49' // fallback; passed in from App
   const modules: ModuleResult[] = recommendedIds.map(id => {
     const mod = MODULE_DEFS[id]
-    const base = mod.prices['10-49']
+    const base = mod.prices[tier]
     const final = Math.round(base * (1 - discount))
     return {
       id,

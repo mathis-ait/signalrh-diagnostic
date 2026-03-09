@@ -11,7 +11,7 @@ type Screen = 'landing' | 'quiz' | 'results'
 
 export default function App() {
   const [screen, setScreen] = useState<Screen>('landing')
-  const [effectif, setEffectif] = useState('10-49')
+  const [effectif, setEffectif] = useState('11-49')
   const [diagId, setDiagId] = useState<'diag360' | 'diagPrevention'>('diag360')
   const [answers, setAnswers] = useState<Record<string, string | string[]>>({})
   const [currentQ, setCurrentQ] = useState(0)
@@ -37,7 +37,7 @@ export default function App() {
     if (currentQ < questions.length - 1) {
       setCurrentQ(currentQ + 1)
     } else {
-      const result = computeScoresFromMoha(answers, questions)
+      const result = computeScoresFromMoha(answers, questions, effectif)
       setScoreResult(result)
       setScreen('results')
     }
@@ -104,6 +104,7 @@ export default function App() {
           />
           <PricingScreen
             preSelectedModules={scoreResult.recommendedModuleIds}
+            effectif={effectif}
           />
         </div>
       )}
